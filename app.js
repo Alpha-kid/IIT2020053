@@ -37,25 +37,39 @@ app.get('/show_database.html',(req,res) => {
 app.get('/enterdatamanually.html',(req,res) => {
   res.sendFile(path.join(__dirname, './Static/enterdatamanually.html'))
 })
+app.get('/wanttoadd.html',(req,res) => {
+  res.sendFile(path.join(__dirname, './Static/wanttoadd.html'))
+})
+app.get('/errorpage.html',(req,res) => {
+  res.sendFile(path.join(__dirname, './Static/errorpage.html'))
+})
 app.get('/blackbackground.png',(req,res) => {
   res.sendFile(path.join(__dirname, './Static/blackbackground.png'))
 })
 app.get('/black2.jpg',(req,res) => {
   res.sendFile(path.join(__dirname, './Static/black2.jpg'))
 })
-
+app.get('/errorpage.jpg',(req,res) => {
+  res.sendFile(path.join(__dirname, './Static/errorpage.jpg'))
+})
 app.use('/id',require('./endpoint/Id.js'))
 // Handle file upload
-app.post('/submit-form', upload.single('image'), async (req, res) => {
-    // Access uploaded image from req.file.buffer
-    const imageData = req.file.buffer;
+app.post('/upload', upload.single('image'), async (req, res) => {
+  // Access uploaded image from req.file.buffer
+  const imageData = req.file.buffer;
+
+  const data = await detectTextByDocument(imageData);
+
+  if (!data.success) {
+      res.sendFile(path.join(__dirname, '/Static/errorpage.html'));
+      return;
+  }
+
+  // You can send additional data along with the HTML response
+  res.redirect(`/wanttoadd.html?jsonData=${encodeURIComponent(JSON.stringify(data.data))}`);
+
+});
   
-    const data = await detectTextByDocument(imageData);
-  
-    console.log(data);
-  
-    res.send(`<div>response get</div>`);
-  });
   // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

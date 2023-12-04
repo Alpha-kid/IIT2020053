@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <title>Display JSON and Database Options</title>
+  </head>
+
+  <body class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">JSON Data</h5>
+        <pre id="jsonText"></pre>
+        <button id="addToDatabaseBtn" class="btn btn-success mr-2">
+          Add to Database
+        </button>
+        <a href="Homepage.html"
+          ><button id="skipBtn" class="btn btn-secondary">Go to home page</button></a
+        >
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+      // Extract JSON data from the query parameter
+      const queryParams = new URLSearchParams(window.location.search);
+      const jsonData = JSON.parse(
+        decodeURIComponent(queryParams.get("jsonData"))
+      );
+
+      // Display JSON data
+      document.getElementById("jsonText").innerText = JSON.stringify(
+        jsonData,
+        null,
+        2
+      );
+
+      // Event listener for the "Add to Database" button
+      document
+        .getElementById("addToDatabaseBtn")
+        .addEventListener("click", addToDatabase);
+
+      // Event listener for the "Skip" button
+      document.getElementById("skipBtn").addEventListener("click", skip);
+
+      // Function to handle adding to the database
+    function addToDatabase() {
+        // Make an HTTP POST request to the server
+        fetch('http://localhost:3000/id/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Data added to the database!');
+            //console.log("Data added to the database!"); // You can handle the response data here if needed
+        })
+        .catch(error => {
+            //console.error('Error:', error);
+            alert('Failed to add data to the database.');
+        });
+    }
+
+      // Function to handle skipping adding to the database
+      function skip() {
+        alert("Skipped adding to the database!");
+      }
+    </script>
+  </body>
+</html>
