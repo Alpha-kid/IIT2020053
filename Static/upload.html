@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thai ID Image Recognition</title>
+
+    <!-- CSS code -->
+    <style>
+        body {
+            font-family: 'Your Font Family', sans-serif;
+            text-align: center;
+            color: #fff; /* Light text color */
+            padding: 20px;
+            margin: 0;
+            background: url('blackbackground.png') center center fixed;
+            background-size: cover;
+        }
+
+        h2,
+        h3 {
+            font-style: italic;
+            color: #ccc; /* Light text color */
+        }
+
+        form {
+            background-color: rgba(46, 46, 46, 0.8); /* Slightly lighter dark background color */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Lighter box shadow */
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #ddd; /* Lighter text color */
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border: 2px solid #072438;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #fff; /* Light text color */
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #333333; /* Dark input background color */
+            margin-bottom: 20px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff; /* Light text color */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .image-container {
+            margin-top: 20px;
+        }
+
+        .uploaded-image {
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Lighter box shadow */
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Thai ID Image Recognition</h2>
+    <h3>
+        Please upload your ID for Recognition.
+    </h3>
+
+    <!-- Form starts here -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="myFile">Choose the File to upload:</label>
+        <input type="file" id="myFile" name="image" accept=".jpg, .jpeg, .png" required /><br />
+
+        <input type="submit" value="Submit" />
+    </form>
+    <!-- Form ends here -->
+
+    <!-- Image container -->
+    <div class="image-container" id="imageContainer">
+        <!-- The uploaded image will be displayed here -->
+    </div>
+
+    <script>
+        // JavaScript code to display the uploaded image
+        document.querySelector('#myFile').addEventListener('change', function (e) {
+            const fileInput = e.target;
+            const imageContainer = document.getElementById('imageContainer');
+
+            // Remove existing image
+            imageContainer.innerHTML = '';
+
+            // Display the selected image
+            if (fileInput.files.length > 0) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(fileInput.files[0]);
+                img.alt = 'Uploaded Image';
+                img.className = 'uploaded-image';
+                imageContainer.appendChild(img);
+            }
+        });
+    </script>
+</body>
+
+</html>

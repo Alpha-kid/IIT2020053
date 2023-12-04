@@ -14,10 +14,35 @@ connectToDatabase();
 const storage = multer.memoryStorage(); // Use memory storage for simplicity
 const upload = multer({ storage: storage });
 
+
 // Serve HTML form
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/Static/index.html'));
+  res.sendFile(path.join(__dirname, '/Static/Homepage.html'));
 });
+app.get('/Homepage.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '/Static/Homepage.html'));
+});
+app.get('/upload.html',(req,res) => {
+  res.sendFile(path.join(__dirname, '/Static/upload.html'))
+})
+app.get('/2245291.png',(req,res) => {
+  res.sendFile(path.join(__dirname, './Static/2245291.png'))
+})
+app.get('/modifydb.html',(req,res) => {
+  res.sendFile(path.join(__dirname, './Static/modifydb.html'))
+})
+app.get('/show_database.html',(req,res) => {
+  res.sendFile(path.join(__dirname, './Static/show_database.html'))
+})
+app.get('/enterdatamanually.html',(req,res) => {
+  res.sendFile(path.join(__dirname, './Static/enterdatamanually.html'))
+})
+app.get('/blackbackground.png',(req,res) => {
+  res.sendFile(path.join(__dirname, './Static/blackbackground.png'))
+})
+app.get('/black2.jpg',(req,res) => {
+  res.sendFile(path.join(__dirname, './Static/black2.jpg'))
+})
 
 app.use('/id',require('./endpoint/Id.js'))
 // Handle file upload
