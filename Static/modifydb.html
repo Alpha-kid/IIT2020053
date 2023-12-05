@@ -12,23 +12,28 @@
 
   <div class="container mt-5">
 
-    <h1 class="mb-4">Enter Identification Number and Key Value</h1>
+    <h1 class="mb-4">For Delete</h1>
 
     <form id="myForm">
       <div class="form-group">
         <label for="identificationNumber">Identification Number:</label>
         <input type="text" class="form-control" id="identificationNumber" name="identificationNumber" required>
       </div>
-
+      <button type="button" class="btn btn-primary" onclick="submitDelete()">Delete</button>
+      <h1 class="mb-4">for update</h1>
+      <div class="form-group">
+        <label for="identificationNumber">Identification Number:</label>
+        <input type="text" class="form-control" id="identificationNumber2" name="identificationNumber2" required>
+      </div>
       <div class="form-group">
         <label for="dropdown">Select an Option:</label>
         <select class="form-control" id="dropdown" name="dropdown">
-          <option value="option1">Identification Number</option>
-          <option value="option2">Name</option>
-          <option value="option3">LastName</option>
-          <option value="option4">Date of birth</option>
-          <option value="option5">Date of issue</option>
-          <option value="option6">Date of expiry</option>
+          <option value="identification_number">Identification Number</option>
+          <option value="name">Name</option>
+          <option value="last_name">LastName</option>
+          <option value="date-of-birth">Date of birth</option>
+          <option value="date-of-issue">Date of issue</option>
+          <option value="date-of-expiry">Date of expiry</option>
         </select>
       </div>
 
@@ -37,7 +42,8 @@
         <input type="text" class="form-control" id="textbox" name="textbox" required>
       </div>
 
-      <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+      <button type="button" class="btn btn-primary" onclick="submitForm()">Update</button>
+      
       <a href="/show_database.html" class="ml-2">Show Database</a>
     </form>
 
@@ -51,14 +57,65 @@
   <script>
     function submitForm() {
       // Get values from form elements
-      const identificationNumber = document.getElementById('identificationNumber').value;
+      alert("submitform")
+      const identificationNumber = document.getElementById('identificationNumber2').value;
       const dropdownValue = document.getElementById('dropdown').value;
       const textboxValue = document.getElementById('textbox').value;
+      jsonData={}
+      jsonData["identification_number"]=identificationNumber;
+      jsonData[dropdownValue]=textboxValue;
+      alert(JSON.stringify(jsonData))
+      fetch('http://localhost:3000/id/update', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData),
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Display JSON in the display window
+          if(data.acknowledged)
+          alert("updated sir")
+        else
+        alert("Not updated re enter")
+        
+        })
+        .catch(error => {
+            alert('Error:', error);
+        });
 
       // Here, you can perform any action you need with the form data
+      // console.log("Identification Number:", identificationNumber);
+      // console.log("Selected Option:", dropdownValue);
+      // console.log("Text Value:", textboxValue);
+    }
+    function submitDelete()
+    {
+      const identificationNumber = document.getElementById('identificationNumber').value;
       console.log("Identification Number:", identificationNumber);
-      console.log("Selected Option:", dropdownValue);
-      console.log("Text Value:", textboxValue);
+      jsonData={}
+      jsonData["identification_number"]=identificationNumber;
+      fetch('http://localhost:3000/id/Delete', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData),
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Display JSON in the display window
+          if(data.acknowledged)
+          alert("Deleted sir")
+        else
+        alert("Not Deleted re enter")
+        
+        })
+        .catch(error => {
+            alert('Error:', error);
+        });
+
     }
   </script>
 

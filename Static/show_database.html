@@ -18,12 +18,12 @@
       <div class="form-group">
         <label for="dropdown">Select an Option:</label>
         <select class="form-control" id="dropdown" name="dropdown">
-          <option value="option1">Identification Number</option>
-          <option value="option2">Name</option>
-          <option value="option3">LastName</option>
-          <option value="option3">Date of birth</option>
-          <option value="option3">Date of issue</option>
-          <option value="option3">Date of expiry</option>
+          <option value="identification_number">Identification Number</option>
+          <option value="name">Name</option>
+          <option value="last_name">LastName</option>
+          <option value="date-of-birth">Date of birth</option>
+          <option value="date-of-issue">Date of issue</option>
+          <option value="date-of-expiry">Date of expiry</option>
         </select>
       </div>
 
@@ -50,18 +50,28 @@
 
   <script>
     function submitForm() {
-      // Get values from form elements
       const dropdownValue = document.getElementById('dropdown').value;
       const textboxValue = document.getElementById('textbox').value;
 
-      // Create a JSON object
-      const jsonObject = {
-        dropdownValue: dropdownValue,
-        textboxValue: textboxValue
-      };
+      let jsonData = {};
+      jsonData[dropdownValue] = textboxValue;
 
-      // Display JSON in the display window
-      document.getElementById('jsonDisplay').innerText = JSON.stringify(jsonObject, null, 2);
+
+      fetch('http://localhost:3000/id/search', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData),
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Display JSON in the display window
+          document.getElementById('jsonDisplay').innerText = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+            alert('Error:', error);
+        });
     }
   </script>
 

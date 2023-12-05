@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const connectToDatabase=require('./db')
 const bodyParser = require('body-parser');
-const detectTextByDocument = require('./Convert_image/detectText.js')
+const detectTextByDocument = require('./convert_image/detectText.js')
 const app = express();
 const port = 3000;
 
