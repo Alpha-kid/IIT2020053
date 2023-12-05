@@ -64,7 +64,7 @@
       jsonData={}
       jsonData["identification_number"]=identificationNumber;
       jsonData[dropdownValue]=textboxValue;
-      alert(JSON.stringify(jsonData))
+      // alert(JSON.stringify(jsonData))
       fetch('http://localhost:3000/id/update', {
             method: 'PUT',
             headers: {
