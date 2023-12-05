@@ -33,10 +33,11 @@ git  clone https://github.com/Alpha-kid/idc.git
 ```
 npm install
 ```
--⚡ it will require few credentials file which i dont uploaded due to confidentiality .(for google Vision Api).
+-⚡ it will require few credentials file which i dont uploaded due to confidentiality .(for google Vision Api).<br>
 -⚡ then run npm start and in browser type http://localhost:3000/<br>
 -⚡ app will get started .<br>
-
+### Test Cases<br>
+-Drive:=https://drive.google.com/drive/folders/1omntX1Wb82apPcUwscwREzqAwuvzzsul?usp=sharing
 ### Use Case Diagram<br>
 -Drive:=https://drive.google.com/file/d/1N4Sn0IY6QUsOOanGDjfNt1--Ho4KtJI3/view?usp=sharing
 ### Demo Video of app<br>
